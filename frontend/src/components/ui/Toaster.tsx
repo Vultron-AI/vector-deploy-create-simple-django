@@ -1,0 +1,43 @@
+/**
+ * Toaster Component
+ *
+ * Renders toast notifications. Add this component once at the root of your app.
+ *
+ * Usage:
+ *   // In App.tsx or main.tsx
+ *   <Toaster />
+ */
+
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from './Toast'
+import { useToast } from './ToastProvider'
+
+export function Toaster() {
+  const { toasts } = useToast()
+
+  return (
+    <ToastProvider>
+      {toasts.map(function ({ id, title, description, action, ...props }) {
+        return (
+          <Toast key={id} {...props}>
+            <div className="grid gap-1">
+              {title && <ToastTitle>{title}</ToastTitle>}
+              {description && (
+                <ToastDescription>{description}</ToastDescription>
+              )}
+            </div>
+            {action}
+            <ToastClose />
+          </Toast>
+        )
+      })}
+      <ToastViewport />
+    </ToastProvider>
+  )
+}
